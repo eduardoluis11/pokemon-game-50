@@ -1,3 +1,6 @@
+# "sounds" folder, which is the folder that has the biggest size of the entire repo.
+sounds/
+
 # Compiled Lua sources
 luac.out
 
