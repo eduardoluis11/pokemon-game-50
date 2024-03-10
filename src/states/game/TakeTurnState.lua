@@ -4,6 +4,10 @@
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
+
+    TakeTurnState file.
+
+    This is probably where most of the work will be done for this homework assignment.
 ]]
 
 TakeTurnState = Class{__includes = BaseState}
@@ -205,22 +209,36 @@ function TakeTurnState:victory()
 
                     self.playerPokemon.currentExp = self.playerPokemon.currentExp + exp
 
-                    -- level up if we've gone over the needed amount
+                    -- level up if we've gone over the needed amount.
+                    -- This is probably where I will have to put most of the work, since the homework only requires
+                    -- me to execute some code when the player levels up.
                     if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
                         
                         gSounds['levelup']:play()
 
                         -- set our exp to whatever the overlap is
                         self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+
+                        -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
+                        -- how many points are allocated into each stat when you level up.
                         self.playerPokemon:levelUp()
+
+                        -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
+                        -- function, and then displays them in a message in the front-end in the Battle Results screen.
+
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
                             self:fadeOutWhite()
                         end))
+
+                    -- This executes if the player didn't level up at the end of a battle.
                     else
                         self:fadeOutWhite()
-                    end
+
+
+                    end -- End of the snippet where I'll have to put most of the work.
+
                 end)
             end)
         end))

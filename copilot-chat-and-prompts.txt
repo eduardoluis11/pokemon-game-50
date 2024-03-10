@@ -1,0 +1,40 @@
+1) /explain Explain what this snippet does. I'm making a game in Lua and Love2D which is a clone of Pokemon. This snippet handles the leveling up of the Pokemon (the player) when they earn enough experience points. Well, tell me in more detail how this snippet works.
+
+The provided code snippet is part of a game that is a clone of Pokemon, written in Lua and Love2D. This specific part of the code handles the leveling up of the player's Pokemon when they earn enough experience points.
+
+The code first checks if the current experience points of the player's Pokemon (`self.playerPokemon.currentExp`) is greater than the experience points required to level up (`self.playerPokemon.expToLevel`). This is done using an `if` statement.
+
+```lua
+if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
+```
+
+If the player's Pokemon has enough experience points to level up, the game plays a 'level up' sound (`gSounds['levelup']:play()`). Then, the code calculates the new current experience points by subtracting the experience points required to level up from the current experience points. This is done to handle the case where the player's Pokemon gains more experience points than needed to level up. The excess experience points are carried over to the next level.
+
+```lua
+self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+```
+
+Next, the code calls the `levelUp` method on the player's Pokemon (`self.playerPokemon:levelUp()`). This method is likely defined elsewhere in the code and is responsible for increasing the level of the player's Pokemon and possibly updating other attributes like health, attack, defense, etc.
+
+```lua
+self.playerPokemon:levelUp()
+```
+
+After leveling up, a message is displayed to the player saying 'Congratulations! Level Up!' (`gStateStack:push(BattleMessageState('Congratulations! Level Up!', function() self:fadeOutWhite() end))`). The `fadeOutWhite` function is called after the message is displayed, which likely handles transitioning the game screen.
+
+```lua
+gStateStack:push(BattleMessageState('Congratulations! Level Up!', function() self:fadeOutWhite() end))
+```
+
+If the player's Pokemon does not have enough experience points to level up, the `else` part of the `if` statement is executed, which simply calls the `fadeOutWhite` function.
+
+```lua
+else
+    self:fadeOutWhite()
+end
+```
+
+In summary, this code snippet handles the leveling up of the player's Pokemon when they earn enough experience points. It calculates the new experience points, levels up the Pokemon, and displays a message to the player.
+
+======================================================================================================================
+
