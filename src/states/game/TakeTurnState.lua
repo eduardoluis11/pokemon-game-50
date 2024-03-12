@@ -195,6 +195,16 @@ function TakeTurnState:victory()
             gStateStack:push(BattleMessageState('You earned ' .. tostring(exp) .. ' experience points!',
                 function() end, false))
 
+            -- DEBUG: This will print a menu saying "Hello World" before the "Level Up" message
+            -- (Source: Copilot).
+            -- BUG: The "Hello World" message is printed after receiving the experience points, but the game hard-locks
+            -- on the Battle Results screen with an empty text box, whiel the overworld music plays in the background.
+            -- This is supposed to transition the game from the Battle Screen into the Overworld. IT DIDN'T WORK.
+            -- (Source: Copilot).
+            gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
+            -- -- pop exp message off
+            --gStateStack:pop()
+
             Timer.after(1.5, function()
                 gSounds['exp']:play()
 
@@ -225,6 +235,7 @@ function TakeTurnState:victory()
 
                         -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
                         -- function, and then displays them in a message in the front-end in the Battle Results screen.
+
 
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',

@@ -1,4 +1,14 @@
 1) /explain Explain what this snippet does. I'm making a game in Lua and Love2D which is a clone of Pokemon. This snippet handles the leveling up of the Pokemon (the player) when they earn enough experience points. Well, tell me in more detail how this snippet works.
 GitHub's Copilot Chat.
-I attached the TakeTurnStte.lua and main.lua files.
+I attached the TakeTurnState.lua and main.lua files.
 Accessed on March 10th, 2024.
+
+2) The snippet that I'm selecting is like the front-end of a menu that shows up when you level up in this Pokemon-like game. Well, below the self.playerPokemon:levelUp() snippet, create a new menu that prints a message that says "Hello World". To do that, it seems that you'll have to insert the message into the State Stack. To do that, it seems that you'll have to use a snippet like the following: "gStateStack:push(MessageState('Hello World'))". I don't know if that specific snippet will work, but I think it needs to be in around that format.
+GitHub's Copilot Chat.
+I attached the TakeTurnState.lua and Pokemon.lua files.
+Accessed on March 12th, 2024.
+
+3) /fix With my current iteration of the code, the message "Hello World" is printed after the screen that says that you've earned experience points. HOWEVER, the game gets hard-locked after I hit enter after the screem that says "Hello World" shows up. Please, make the game be playable once again after you hit Enter on "Hello World". That is, the player should exit the "Battle Scene", and go back to the overworld.
+GitHub's Copilot Chat.
+I attached the TakeTurnState.lua and Pokemon.lua files.
+Accessed on March 12th, 2024.

@@ -38,3 +38,118 @@ In summary, this code snippet handles the leveling up of the player's Pokemon wh
 
 ======================================================================================================================
 
+The snippet that I'm selecting is like the front-end of a menu that shows up when you level up in this Pokemon-like game. Well, below the self.playerPokemon:levelUp() snippet, create a new menu that prints a message that says "Hello World". To do that, it seems that you'll have to insert the message into the State Stack. To do that, it seems that you'll have to use a snippet like the following: "gStateStack:push(MessageState('Hello World'))". I don't know if that specific snippet will work, but I think it needs to be in around that format.
+
+You're correct in your understanding of how to push a new message onto the state stack. In the context of your game, you can use the `BattleMessageState` to display a message to the player. Here's how you can add a "Hello World" message right after the player's Pokemon levels up:
+
+```lua
+if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
+
+    gSounds['levelup']:play()
+
+    -- set our exp to whatever the overlap is
+    self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+
+    -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
+    -- how many points are allocated into each stat when you level up.
+    self.playerPokemon:levelUp()
+
+    -- Push a new message onto the state stack
+    gStateStack:push(BattleMessageState('Hello World'))
+
+    gStateStack:push(BattleMessageState('Congratulations! Level Up!',
+    function()
+        self:fadeOutWhite()
+    end))
+
+-- This executes if the player didn't level up at the end of a battle.
+else
+    self:fadeOutWhite()
+end
+```
+
+This will display a "Hello World" message to the player right after their Pokemon levels up, before the "Congratulations! Level Up!" message.
+
+======================================================================================================================
+
+/fix With my current iteration of the code, the message "Hello World" is printed after the screen that says that you've earned experience points. HOWEVER, the game gets hard-locked after I hit enter after the screem that says "Hello World" shows up. Please, make the game be playable once again after you hit Enter on "Hello World". That is, the player should exit the "Battle Scene", and go back to the overworld.
+
+**Problem 1: Game gets hard-locked after displaying "Hello World" message**
+
+The issue here is that after the "Hello World" message is displayed, there is no callback function to continue the game flow. The `BattleMessageState` requires a callback function to be executed after the message is displayed. In your case, the callback function is empty, which is causing the game to get stuck.
+
+Here's how you can fix this:
+
+**Before:**
+```lua
+gStateStack:push(BattleMessageState('Hello World', function() end, false))
+```
+
+**After:**
+```lua
+gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
+```
+
+In the fixed code, the `fadeOutWhite` function is called after the "Hello World" message is displayed, which handles transitioning the game screen back to the overworld.
+
+Here's the complete fixed version of the code:
+
+```lua
+-- DEBUG: This will print a menu saying "Hello World" before the "Level Up" message
+-- (Source: Copilot).
+-- BUG: The "Hello World" message is printed after receiving the experience points, but the game hard-locks
+-- on the Battle Results screen with an empty text box, whiel the overworld music plays in the background.
+gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
+-- -- pop exp message off
+--gStateStack:pop()
+
+Timer.after(1.5, function()
+    gSounds['exp']:play()
+
+    -- animate the exp filling up
+    Timer.tween(0.5, {
+        [self.battleState.playerExpBar] = {value = math.min(self.playerPokemon.currentExp + exp, self.playerPokemon.expToLevel)}
+    })
+    :finish(function()
+
+        -- pop exp message off
+        gStateStack:pop()
+
+        self.playerPokemon.currentExp = self.playerPokemon.currentExp + exp
+
+        -- level up if we've gone over the needed amount.
+        -- This is probably where I will have to put most of the work, since the homework only requires
+        -- me to execute some code when the player levels up.
+        if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
+
+            gSounds['levelup']:play()
+
+            -- set our exp to whatever the overlap is
+            self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+
+            -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
+            -- how many points are allocated into each stat when you level up.
+            self.playerPokemon:levelUp()
+
+            -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
+            -- function, and then displays them in a message in the front-end in the Battle Results screen.
+
+
+
+            gStateStack:push(BattleMessageState('Congratulations! Level Up!',
+            function()
+                self:fadeOutWhite()
+            end))
+
+        -- This executes if the player didn't level up at the end of a battle.
+        else
+            self:fadeOutWhite()
+
+
+        end -- End of the snippet where I'll have to put most of the work.
+```
+This should resolve the issue and make the game playable again after the "Hello World" message is displayed.
+
+======================================================================================================================
+
+
