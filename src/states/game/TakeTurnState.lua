@@ -132,6 +132,10 @@ function TakeTurnState:checkDeaths()
     return false
 end
 
+--[[
+    This function is called when you get a Game Over (if your pokemon faints). It will drop the player's sprite down
+    below the window, and then push a State to the stack with a Game Over message saying "You fainted!".
+]]
 function TakeTurnState:faint()
 
     -- drop player sprite down below the window
@@ -201,7 +205,7 @@ function TakeTurnState:victory()
             -- on the Battle Results screen with an empty text box, whiel the overworld music plays in the background.
             -- This is supposed to transition the game from the Battle Screen into the Overworld. IT DIDN'T WORK.
             -- (Source: Copilot).
-            gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
+            -- gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
             -- -- pop exp message off
             --gStateStack:pop()
 
@@ -264,11 +268,17 @@ function TakeTurnState:fadeOutWhite()
     function()
 
         -- resume field music
+        -- This stops the Battle music
         gSounds['victory-music']:stop()
+
+        -- This plays the Overworld music
         gSounds['field-music']:play()
         
         -- pop off the battle state
+        -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
         gStateStack:pop()
+
+        -- This inserts a new State to the Stack by using the FadeOutState() function.
         gStateStack:push(FadeOutState({
             r = 1, g = 1, b = 1
         }, 1, function() end))

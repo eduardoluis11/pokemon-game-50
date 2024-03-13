@@ -12,3 +12,26 @@ Accessed on March 12th, 2024.
 GitHub's Copilot Chat.
 I attached the TakeTurnState.lua and Pokemon.lua files.
 Accessed on March 12th, 2024.
+
+4) /explain what does the onFadeComplete() function do? Also, is it a Love2D function, or is it a custom function created for this source code?
+GitHub's Copilot Chat.
+I highlighted line 23 from the FadeOutState.lua file.
+I attached the FadeOutState.lua file.
+Accessed on March 13th, 2024.
+
+5) Can you pinpoint the file in the project where the onFadeComplete() function was first declared?
+GitHub's Copilot Chat.
+I attached the FadeOutState.lua file.
+Accessed on March 13th, 2024.
+
+6) /explain Please explain what the init() function of the FadeOutState() function does. Also, I think I get it: "onFadeComplete" is just a parameter created specifically for the init() function of the FadeOutState() function in FadeOutState.lua? That is, it's jsut a variable that only exists as a parameter for the init() function of the FadeOutState() function?
+GitHub's Copilot Chat.
+I highlighted lines 23 to 37 from the FadeOutState.lua file.
+I attached the FadeOutState.lua file.
+Accessed on March 13th, 2024.
+
+7) /explain Thanks, now please, tell me more about what the gStateStack() function does. Also, can you pinpoint the first file in which the gStateStack() was initially created?
+GitHub's Copilot Chat.
+I highlighted lines 46 to 77 from the TakeTurnState.lua file.
+I attached the TakeTurnState.lua file.
+Accessed on March 13th, 2024.
