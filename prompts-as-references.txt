@@ -35,3 +35,9 @@ GitHub's Copilot Chat.
 I highlighted lines 46 to 77 from the TakeTurnState.lua file.
 I attached the TakeTurnState.lua file.
 Accessed on March 13th, 2024.
+
+8) /explain What does this function do? Explain in detail how this function works.
+GitHub's Copilot Chat.
+I highlighted lines 11 to 22 from the BattleMessageState.lua file.
+I attached the BattleMessageState.lua file.
+Accessed on March 14th, 2024.

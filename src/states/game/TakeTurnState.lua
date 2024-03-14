@@ -209,6 +209,7 @@ function TakeTurnState:victory()
             -- -- pop exp message off
             --gStateStack:pop()
 
+            -- Tweening animation showing the EXP bar filling up with EXP (like in modern Pokemon Games)
             Timer.after(1.5, function()
                 gSounds['exp']:play()
 
@@ -244,10 +245,12 @@ function TakeTurnState:victory()
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
+                            -- This should fade the screen to whit and return the player to the overworld
                             self:fadeOutWhite()
                         end))
 
                     -- This executes if the player didn't level up at the end of a battle.
+                    -- This should fade the screen to whit and return the player to the overworld.
                     else
                         self:fadeOutWhite()
 
@@ -255,7 +258,7 @@ function TakeTurnState:victory()
                     end -- End of the snippet where I'll have to put most of the work.
 
                 end)
-            end)
+            end)    -- End of the Tweening EXP animation
         end))
     end)
 end

@@ -260,5 +260,32 @@ You're correct in your understanding of the `onFadeComplete` parameter. It is a 
 
 ======================================================================================================================
 
+/explain What does this function do? Explain in detail how this function works.
 
+The `init` function in the `BattleMessageState` class is the constructor for this class. It is called when a new instance of `BattleMessageState` is created. This function takes three parameters: `msg`, `onClose`, and `canInput`.
+
+```lua
+function BattleMessageState:init(msg, onClose, canInput)
+```
+
+The `msg` parameter is a string that represents the message to be displayed in the battle message state. This message is passed to the `Textbox` constructor to create a new `Textbox` object, which is then assigned to `self.textbox`.
+
+```lua
+self.textbox = Textbox(0, VIRTUAL_HEIGHT - 64, VIRTUAL_WIDTH, 64, msg, gFonts['medium'])
+```
+
+The `onClose` parameter is a callback function that is executed when the battle message state is closed. If no function is provided when the `BattleMessageState` is created, a default empty function is used.
+
+```lua
+self.onClose = onClose or function() end
+```
+
+The `canInput` parameter is a boolean that determines whether the battle message state can accept input. If no value is provided when the `BattleMessageState` is created, `canInput` defaults to `true`.
+
+```lua
+self.canInput = canInput
+if self.canInput == nil then self.canInput = true end
+```
+
+In summary, the `init` function in the `BattleMessageState` class is used to initialize a new instance of this class with a specific message, a callback function to be executed when the state is closed, and a flag that determines whether the state can accept input.
 
