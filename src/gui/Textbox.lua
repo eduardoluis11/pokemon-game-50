@@ -6,6 +6,12 @@
     cogden@cs50.harvard.edu
 ]]
 
+
+--[[
+    Textbox Class.
+
+    This will let me create a textbox / dialogue box that can display text.
+]]
 Textbox = Class{}
 
 function Textbox:init(x, y, width, height, text, font)

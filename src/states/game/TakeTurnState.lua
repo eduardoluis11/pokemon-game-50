@@ -174,6 +174,28 @@ function TakeTurnState:faint()
     end)
 end
 
+--[[
+    This function is called when you win a battle. It will drop the enemy's sprite down below the window, and then push
+    a State to the stack with a Victory message saying "Victory!".
+
+    This is where I'll put most of the work and most of the code.
+
+    To render a message that should wait until the user presses "Enter" to go to the next message, I'll have to put a
+    snippet like this:
+        gStateStack:push(BattleMessageState('First Message',
+
+        function()
+
+            gStateStack:push(BattleMessageState('Second Message',
+
+            function()
+
+    The "function()" snippet will for the user to press "Enter" to go to the next message. I will have to insert
+    EVERYTHING in the code that comes after the first message inside of the "function()" snippet so that everything
+    after the first message is executed ONLY AFTER PRESSING "Enter". Then, I want EVERYTHING that should be executed
+    after the second message to be inside of the "function()" snippet that comes after the second message, and so on.
+
+]]
 function TakeTurnState:victory()
 
     -- drop enemy sprite down below the window
@@ -187,78 +209,103 @@ function TakeTurnState:victory()
         gSounds['victory-music']:setLooping(true)
         gSounds['victory-music']:play()
 
+        -- DEBUG: Remove the last state from the stack.
+        -- The good thing is that, by leaving this, the game won't hard-locked, and I'll be able to transition into the
+        -- Overworld. The bad thing is that, before printing "Victory", I will be back to the Overworld.
+        --gStateStack:pop()
+
+        -- -- DEBUG: This should print "Hello World!" before printing "Victory!". It should wait for the user to hit
+        -- -- "Enter" before going to the "Victory!" message. THIS DIDN'T WORK.
+        --gStateStack:push(BattleMessageState('Hello World!', function() end))
+
+        -- IF I Don't put this, I WILL GET A "Hello World" message while transitioning to the overworld, and the
+        -- overworld music will play in the background while the game is hard-locked. This is not supposed to happen.
+        -- -- DEBUG: This should remove the "Hello World!" message so that, later, the user will print "Victory!"
+        --gStateStack:pop()
+
         -- when finished, push a victory message
         gStateStack:push(BattleMessageState('Victory!',
-        
+
+        -- DEBUG: This function should print "Hello World!" before printing "You've earned EXP". It should wait for the
+        -- user to hit "Enter" before going to the "You've earned EXP" message. IT WORKED.
         function()
 
-            -- sum all IVs and multiply by level to get exp amount
-            local exp = (self.opponentPokemon.HPIV + self.opponentPokemon.attackIV +
-                self.opponentPokemon.defenseIV + self.opponentPokemon.speedIV) * self.opponentPokemon.level
+            gStateStack:push(BattleMessageState('Hello World!',
 
-            gStateStack:push(BattleMessageState('You earned ' .. tostring(exp) .. ' experience points!',
-                function() end, false))
+            function()
 
-            -- DEBUG: This will print a menu saying "Hello World" before the "Level Up" message
-            -- (Source: Copilot).
-            -- BUG: The "Hello World" message is printed after receiving the experience points, but the game hard-locks
-            -- on the Battle Results screen with an empty text box, whiel the overworld music plays in the background.
-            -- This is supposed to transition the game from the Battle Screen into the Overworld. IT DIDN'T WORK.
-            -- (Source: Copilot).
-            -- gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
-            -- -- pop exp message off
-            --gStateStack:pop()
+                -- sum all IVs and multiply by level to get exp amount.
+                -- This is is the total EXP that you will get. THIS EXP WON'T BE GIVEN TO THE PLAYER YET!
+                local exp = (self.opponentPokemon.HPIV + self.opponentPokemon.attackIV +
+                        self.opponentPokemon.defenseIV + self.opponentPokemon.speedIV) * self.opponentPokemon.level
 
-            -- Tweening animation showing the EXP bar filling up with EXP (like in modern Pokemon Games)
-            Timer.after(1.5, function()
-                gSounds['exp']:play()
+                gStateStack:push(BattleMessageState('You earned ' .. tostring(exp) .. ' experience points!',
+                        function() end, false))
 
-                -- animate the exp filling up
-                Timer.tween(0.5, {
-                    [self.battleState.playerExpBar] = {value = math.min(self.playerPokemon.currentExp + exp, self.playerPokemon.expToLevel)}
-                })
-                :finish(function()
-                    
-                    -- pop exp message off
-                    gStateStack:pop()
+                -- DEBUG: This will print a menu saying "Hello World" before the "Level Up" message
+                -- (Source: Copilot).
+                -- BUG: The "Hello World" message is printed after receiving the experience points, but the game hard-locks
+                -- on the Battle Results screen with an empty text box, whiel the overworld music plays in the background.
+                -- This is supposed to transition the game from the Battle Screen into the Overworld. IT DIDN'T WORK.
+                -- (Source: Copilot).
+                -- gStateStack:push(BattleMessageState('Hello World', function() self:fadeOutWhite() end, false))
+                -- -- pop exp message off
+                --gStateStack:pop()
 
-                    self.playerPokemon.currentExp = self.playerPokemon.currentExp + exp
+                -- Tweening animation showing the EXP bar filling up with EXP (like in modern Pokemon Games)
+                Timer.after(1.5, function()
+                    gSounds['exp']:play()
 
-                    -- level up if we've gone over the needed amount.
-                    -- This is probably where I will have to put most of the work, since the homework only requires
-                    -- me to execute some code when the player levels up.
-                    if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
-                        
-                        gSounds['levelup']:play()
+                    -- animate the exp filling up.
+                    -- THIS IS THE CALCULATION THAT GIVES THE POKEMON THE EXP! The exp given will be the one calculated in
+                    -- the snippet above ("local exp").
+                    Timer.tween(0.5, {
+                        [self.battleState.playerExpBar] = {value = math.min(self.playerPokemon.currentExp + exp, self.playerPokemon.expToLevel)}
+                    })
+                         :finish(function()
 
-                        -- set our exp to whatever the overlap is
-                        self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+                        -- pop exp message off
+                        gStateStack:pop()
 
-                        -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
-                        -- how many points are allocated into each stat when you level up.
-                        self.playerPokemon:levelUp()
+                        self.playerPokemon.currentExp = self.playerPokemon.currentExp + exp
 
-                        -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
-                        -- function, and then displays them in a message in the front-end in the Battle Results screen.
+                        -- level up if we've gone over the needed amount.
+                        -- This is probably where I will have to put most of the work, since the homework only requires
+                        -- me to execute some code when the player levels up.
+                        if self.playerPokemon.currentExp > self.playerPokemon.expToLevel then
+
+                            gSounds['levelup']:play()
+
+                            -- set our exp to whatever the overlap is
+                            self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+
+                            -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
+                            -- how many points are allocated into each stat when you level up.
+                            self.playerPokemon:levelUp()
+
+                            -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
+                            -- function, and then displays them in a message in the front-end in the Battle Results screen.
 
 
+                            -- This prints the message "Level Up!", and then, automatically, sends you to the overworld.
+                            gStateStack:push(BattleMessageState('Congratulations! Level Up!',
+                                    function()
+                                        -- This should fade the screen to whit and return the player to the overworld
+                                        self:fadeOutWhite()
+                                    end))
 
-                        gStateStack:push(BattleMessageState('Congratulations! Level Up!',
-                        function()
-                            -- This should fade the screen to whit and return the player to the overworld
+                            -- This executes if the player didn't level up at the end of a battle.
+                            -- This should fade the screen to whit and return the player to the overworld.
+                        else
                             self:fadeOutWhite()
-                        end))
-
-                    -- This executes if the player didn't level up at the end of a battle.
-                    -- This should fade the screen to whit and return the player to the overworld.
-                    else
-                        self:fadeOutWhite()
 
 
-                    end -- End of the snippet where I'll have to put most of the work.
+                        end -- End of the snippet where I'll have to put most of the work.
 
-                end)
-            end)    -- End of the Tweening EXP animation
+                    end)
+                end)    -- End of the Tweening EXP animation
+
+            end)) -- DEBUG: End of the "Hello World" message
         end))
     end)
 end
