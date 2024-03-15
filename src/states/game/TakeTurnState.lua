@@ -199,6 +199,9 @@ end
     “Hello World 2” screen to go back to the Overworld. I GOT IT! After obtaining EXP, I got the “Hello World!” message,
     and it’s waiting for me to press Enter!
 
+    Now, let me try printing “Hello World” ONLY after leveling up. I will make the player wait until the player hits
+    "Enter" to go from the “Hello World” to the Overworld after leveling up.
+
 ]]
 function TakeTurnState:victory()
 
@@ -293,9 +296,23 @@ function TakeTurnState:victory()
 
                             -- This prints the message "Level Up!", and then, automatically, sends you to the overworld.
                             gStateStack:push(BattleMessageState('Congratulations! Level Up!',
+
                                     function()
-                                        -- This should fade the screen to whit and return the player to the overworld
-                                        self:fadeOutWhite()
+
+                                            -- DEBUG: This should print "Hello World" after printing "Level Up". It
+                                            -- should wait for the user to hit "Enter" before going to the Overworld. IT
+                                            -- WORKED.
+                                            gStateStack:push(BattleMessageState('Hello World after leveling up',
+                                            function()
+                                                -- This should fade the screen to white and return the player to the
+                                                -- overworld.
+                                                self:fadeOutWhite()
+
+                                            end))
+                                            -- End of the DEBUG "Hello World" message that shows up after the "Lvl Up"
+                                            -- message.
+
+
                                     end))
 
                             -- This executes if the player didn't level up at the end of a battle.
