@@ -195,6 +195,10 @@ end
     after the first message is executed ONLY AFTER PRESSING "Enter". Then, I want EVERYTHING that should be executed
     after the second message to be inside of the "function()" snippet that comes after the second message, and so on.
 
+    Now, let me try printing “Hello World” ONLY after gaining experience. Then, you need to press “Enter” during the
+    “Hello World 2” screen to go back to the Overworld. I GOT IT! After obtaining EXP, I got the “Hello World!” message,
+    and it’s waiting for me to press Enter!
+
 ]]
 function TakeTurnState:victory()
 
@@ -295,9 +299,18 @@ function TakeTurnState:victory()
                                     end))
 
                             -- This executes if the player didn't level up at the end of a battle.
-                            -- This should fade the screen to whit and return the player to the overworld.
+                            -- This should fade the screen to white and return the player to the overworld.
                         else
-                            self:fadeOutWhite()
+
+
+                            -- This prints “Hello World” ONLY after gaining EXP. Then, you need to press “Enter” during
+                            -- this new “Hello World” screen to go back to the Overworld. IT WORKED
+                            gStateStack:push(BattleMessageState('Hello World 2!',
+
+                            function()
+                                self:fadeOutWhite()
+
+                            end))   -- End of the "Hello World" message that shows up after the "EXP" message.
 
 
                         end -- End of the snippet where I'll have to put most of the work.
