@@ -315,3 +315,90 @@ gStateStack:push(BattleMessageState('Congratulations! Level Up!',
         gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. " Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. " Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. " Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
 ```
 This way, you are correctly displaying the initial stat, the increase, and the final stat after leveling up.
+
+======================================================================================================================
+
+Modify the selected snippet snippet so that it diesplays all that text on a menu. To create a menu, you need to create an instance of the Menu{} class. Here's the init() function of the Menu{} class: "function Menu:init(def) self.panel = Panel(def.x, def.y, def.width, def.height)
+self.selection = Selection {
+    items = def.items,
+    x = def.x,
+    y = def.y,
+    width = def.width,
+    height = def.height
+}
+end". So, using these pieces of data, create a menu within the gStateStack:push() function.
+
+To display the text on a menu, you need to create an instance of the `Menu` class and pass the required parameters to it. The `Menu` class requires a definition table with `x`, `y`, `width`, `height`, and `items` fields. The `items` field is a table where each item is a table with `text` and `onSelect` fields.
+
+In your case, you want to display the stats of the Pokemon, so you can create a menu item for each stat. The `onSelect` field can be an empty function since you don't want to perform any action when a stat is selected.
+
+Here's how you can modify the selected code snippet:
+
+```lua
+local statsMenu = Menu {
+    x = 10,
+    y = 10,
+    width = 200,
+    height = 200,
+    items = {
+        { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end },
+        { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end },
+        { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end },
+        { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end }
+    }
+}
+
+gStateStack:push(statsMenu)
+```
+
+This code creates a new `Menu` instance with the stats as menu items and pushes it onto the state stack. The `x`, `y`, `width`, and `height` values are placeholders, you should replace them with the appropriate values for your game.
+
+======================================================================================================================
+
+The cod that you gave me didn't work. Just when I was about to display the menu, the game didn't render the menu, and the game got hard-locked in the battle screen. Please, take this code that I'm highlighting as a reference, since the "--remove the last attack state from the stack" snippet of 2 lines shows a menu that is similar to the menu that I want to display.
+
+I'm sorry to hear that the code didn't work as expected. The issue might be due to the way the `Menu` instance is being pushed onto the `gStateStack`. In the `TakeTurnState` class, the `gStateStack` is expecting states, not menu instances.
+
+To display the menu, you could create a new state, let's call it `StatsIncreaseState`, which will handle the rendering and updating of the `Menu` instance. This state would be pushed onto the `gStateStack` after the player's Pokemon levels up.
+
+Here's how you can create the `StatsIncreaseState`:
+
+```lua
+StatsIncreaseState = Class{__includes = BaseState}
+
+function StatsIncreaseState:init(menu)
+    self.menu = menu
+end
+
+function StatsIncreaseState:update(dt)
+    self.menu:update(dt)
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gStateStack:pop()
+    end
+end
+
+function StatsIncreaseState:render()
+    self.menu:render()
+end
+```
+
+Then, in your `TakeTurnState` class, you would create the `Menu` instance and push the `StatsIncreaseState` onto the `gStateStack`:
+
+```lua
+local statsMenu = Menu {
+    x = 10,
+    y = 10,
+    width = 200,
+    height = 200,
+    items = {
+        { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end },
+        { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end },
+        { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end },
+        { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end }
+    }
+}
+
+gStateStack:push(StatsIncreaseState(statsMenu))
+```
+
+This way, the `StatsIncreaseState` will handle the rendering and updating of the `Menu` instance, and the game should not get hard-locked.

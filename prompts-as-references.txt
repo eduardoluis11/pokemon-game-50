@@ -46,3 +46,23 @@ Accessed on March 14th, 2024.
 GitHub's Copilot Chat.
 I highlighted lines 320 to 346 from the TakeTurnState.lua file.
 Accessed on March 16th, 2024.
+
+10) Modify the selected snippet snippet so that it diesplays all that text on a menu. To create a menu, you need to create an instance of the Menu{} class. Here's the init() function of the Menu{} class: "function Menu:init(def) self.panel = Panel(def.x, def.y, def.width, def.height)
+self.selection = Selection {
+    items = def.items,
+    x = def.x,
+    y = def.y,
+    width = def.width,
+    height = def.height
+}
+end". So, using these pieces of data, create a menu within the gStateStack:push() function.
+GitHub's Copilot Chat.
+I highlighted line 385 from the TakeTurnState.lua file.
+I attached the TakeTurnState.lua and the Menu.lua files.
+Accessed on March 16th, 2024.
+
+11) The cod that you gave me didn't work. Just when I was about to display the menu, the game didn't render the menu, and the game got hard-locked in the battle screen. Please, take this code that I'm highlighting as a reference, since the "--remove the last attack state from the stack" snippet of 2 lines shows a menu that is similar to the menu that I want to display.
+GitHub's Copilot Chat.
+I highlighted lines 41 to 73 from the TakeTurnState.lua file.
+I attached the TakeTurnState.lua, the Menu.lua, and the BattleMenuState.lua files.
+Accessed on March 16th, 2024.

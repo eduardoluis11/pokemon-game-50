@@ -362,11 +362,28 @@ function TakeTurnState:victory()
                                             -- WORKED.
                                             --gStateStack:push(BattleMessageState('Hello World after leveling up',
 
+                                            -- Menu that will show the Stat Increases. This won't be printed yet. I'm
+                                            -- just declaring the menu and its text here.
+                                            local statsMenu = Menu {
+                                                x = 10,
+                                                y = 10,
+                                                width = 200,
+                                                height = 200,
+                                                items = {
+                                                    { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end },
+                                                    { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end },
+                                                    { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end },
+                                                    { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end }
+                                                }
+                                            }
 
                                             -- This will print each stat increase from Global Variables, and I will
                                             -- try to add all the stats and show the resulting stat after leveling up.
                                             --gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
+                                            -- This was supposed to render the menu, BUT DIDNT WORK.
+                                            --gStateStack:push(BattleMessageState(statsMenu,
                                             gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. ", Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. ", Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. ", Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
+
 
                                             function()
 
