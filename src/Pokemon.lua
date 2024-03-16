@@ -63,6 +63,10 @@ end
     initially set to "false" to prevent the statsLevelUp() function from printing the Player Pokemon's stats right at
     the beginning of the game, and to prevent the statsLevelUp() function from printing the enemy Pokemon's stats right
     at the beginning of a random encounter.
+
+    I HAVE AN IDEA THOUGH: how about I store each stat increase in a global variable (like globalHPIncrease,
+    globalDefIncrease, etc) in statLevelUp when the printStatIncrease flag is true? Then, in TakeTurnState.lua, if I
+    level up, I will print those global variables with those stat increases on the dialog box.
 ]]
 function Pokemon:statsLevelUp()
 
@@ -114,6 +118,16 @@ function Pokemon:statsLevelUp()
     -- IT'S also printing the stats for the enemy pokemon during every new random encounter, WHICH IS NOT WHAT I WANT.
     if printStatIncrease then
         print("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease)
+
+        globalHPIncrease = HPIncrease
+        globalAttackIncrease = attackIncrease
+        globalDefenseIncrease = defenseIncrease
+        globalSpeedIncrease = speedIncrease
+
+        ---- I'll see if this prints the stat increases on the dialog box while leveling up.
+        ---- THIS HARD-LOCKS the game!
+        --gStateStack:push(BattleMessageState("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease,
+        --    function() end))
     end
 
     return HPIncrease, attackIncrease, defenseIncrease, speedIncrease

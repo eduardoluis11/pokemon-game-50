@@ -210,6 +210,16 @@ end
     encounter. That is, I would only print the stat increases for the player pokemon, and ONLY right after they level
     up.
 
+    To print the stat increases from the global variables from statLevelUp() when you level up, I will execute a
+    function that would look like this:
+        gStateStack:push(BattleMessageState('PRINT STAT INCREASES HERE. That is, Global HP increase is' +
+        globalHPIncrease + ‘ and so on and so forth’,
+            function()
+            printStatIncrease = false
+
+           self:fadeOutWhite()
+        end))
+
 ]]
 function TakeTurnState:victory()
 
@@ -320,7 +330,10 @@ function TakeTurnState:victory()
                                             -- DEBUG: This should print "Hello World" after printing "Level Up". It
                                             -- should wait for the user to hit "Enter" before going to the Overworld. IT
                                             -- WORKED.
-                                            gStateStack:push(BattleMessageState('Hello World after leveling up',
+                                            --gStateStack:push(BattleMessageState('Hello World after leveling up',
+                                            -- This will print each stat increase from Global Variables.
+                                            gStateStack:push(BattleMessageState("HP: " .. globalHPIncrease .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
+
                                             function()
 
                                                 -- This will deactivate the Boolean that prints the stat increases in
