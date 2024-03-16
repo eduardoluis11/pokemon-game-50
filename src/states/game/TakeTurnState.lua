@@ -224,6 +224,22 @@ end
 
     Next, I will try to add the initial stat and the stat increase in the dialogue box, as well as showing the resulting
     stat after leveling up.
+
+    I need to store somewhere the stat BEFORE leveling up, and then print that variable with that starting stat on the
+    dialog box. I could also add a “,” to separate each stat being increased. So, before calling the levelUp() function,
+    I will use the self.playerPokemon.name_of_the_stat to store the initial stats for the player Pokemon BEFORE leveling
+    up.
+
+    Then,, while printing the resulting stats, I will print the initial stat and the stat increase this way:
+        "Stat = Starting stat + stat increase"
+
+    Afterwards, I need to print the sum of the starting stat plus the stat increase. However, I DON'T EVEN NEED TO MAKE
+    A CALCULATION. I don't need to use the "+" sign. Where is the value of the stat after leveling up of the player
+    pokemon being stored?. In self.playerPokemon.name_of_the_stat AFTER calling the levelUp() function! So, I will use
+    the self.playerPokemon.name_of_the_stat notation to print the resulting stats for the player Pokemon as the sum
+    of the initial stat and the stat increase, without actually even needing to make a calculation. That is,
+    I will use the following notation:
+        Stat: initial_stat + stat_increase = self.playerPokemon.name_of_the_stat
 ]]
 function TakeTurnState:victory()
 
@@ -321,6 +337,12 @@ function TakeTurnState:victory()
                             print("These are the stats for the Player Pokemon BEFORE leveling up:")
                             print("HP: " .. self.playerPokemon.HP .. " Attack: " .. self.playerPokemon.attack .. " Defense: " .. self.playerPokemon.defense .. " Speed: " .. self.playerPokemon.speed)
 
+                            -- This will store the initial stats for the Player Pokemon BEFORE leveling up.
+                            -- I will use these to calculate the resulting stats after leveling up.
+                            local initialHP = self.playerPokemon.HP
+                            local initialAttack = self.playerPokemon.attack
+                            local initialDefense = self.playerPokemon.defense
+                            local initialSpeed = self.playerPokemon.speed
 
                             -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
                             -- how many points are allocated into each stat when you level up.
@@ -339,9 +361,12 @@ function TakeTurnState:victory()
                                             -- should wait for the user to hit "Enter" before going to the Overworld. IT
                                             -- WORKED.
                                             --gStateStack:push(BattleMessageState('Hello World after leveling up',
+
+
                                             -- This will print each stat increase from Global Variables, and I will
                                             -- try to add all the stats and show the resulting stat after leveling up.
-                                            gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
+                                            --gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
+                                            gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. ", Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. ", Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. ", Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
 
                                             function()
 

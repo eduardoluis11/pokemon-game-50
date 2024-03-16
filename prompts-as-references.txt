@@ -41,3 +41,8 @@ GitHub's Copilot Chat.
 I highlighted lines 11 to 22 from the BattleMessageState.lua file.
 I attached the BattleMessageState.lua file.
 Accessed on March 14th, 2024.
+
+9) Edit the line of code that says " gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease, ". Modify it so that it takes the initial stats (such as "self.playerPokemon.HP") BEFORE the levelUp() function is called. The reason for this is that, after the levelUp() function is called, the initial stat (like self.playerPokemon.HP) will have increased, and I want that stat BEFORE the increase. Then, after you store in a variable the initial value of that starting stat, insert it into the line of code that shows the stat increases in "self.playerPokemon.name_of_stat". That way, all the stats will be correctly added and calculated, and will print properly on the game. As it is, the starting stat is adding the stat increase twice, since the stat increase is already added to the initial stat after the levelUp() function is called. So, fix this.
+GitHub's Copilot Chat.
+I highlighted lines 320 to 346 from the TakeTurnState.lua file.
+Accessed on March 16th, 2024.

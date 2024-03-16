@@ -289,3 +289,29 @@ if self.canInput == nil then self.canInput = true end
 
 In summary, the `init` function in the `BattleMessageState` class is used to initialize a new instance of this class with a specific message, a callback function to be executed when the state is closed, and a flag that determines whether the state can accept input.
 
+
+======================================================================================================================
+
+Edit the line of code that says " gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease, ". Modify it so that it takes the initial stats (such as "self.playerPokemon.HP") BEFORE the levelUp() function is called. The reason for this is that, after the levelUp() function is called, the initial stat (like self.playerPokemon.HP) will have increased, and I want that stat BEFORE the increase. Then, after you store in a variable the initial value of that starting stat, insert it into the line of code that shows the stat increases in "self.playerPokemon.name_of_stat". That way, all the stats will be correctly added and calculated, and will print properly on the game. As it is, the starting stat is adding the stat increase twice, since the stat increase is already added to the initial stat after the levelUp() function is called. So, fix this.
+
+You can solve this issue by storing the initial stats before calling the `levelUp()` function. You can create variables to hold the initial values of the stats, and then use these variables in the `BattleMessageState` function call. Here's how you can do it:
+
+```lua
+-- Store the initial stats for the Player Pokemon BEFORE leveling up.
+local initialHP = self.playerPokemon.HP
+local initialAttack = self.playerPokemon.attack
+local initialDefense = self.playerPokemon.defense
+local initialSpeed = self.playerPokemon.speed
+
+-- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
+-- how many points are allocated into each stat when you level up.
+self.playerPokemon:levelUp()
+
+-- This prints the message "Level Up!", and then, automatically, sends you to the overworld.
+gStateStack:push(BattleMessageState('Congratulations! Level Up!',
+    function()
+        -- This will print each stat increase from Global Variables, and I will
+        -- try to add all the stats and show the resulting stat after leveling up.
+        gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. " Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. " Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. " Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
+```
+This way, you are correctly displaying the initial stat, the increase, and the final stat after leveling up.
