@@ -58,10 +58,15 @@ end
     The dice is capped at 6 just so no stat ever increases by 3 each time, but
     higher IVs will on average give higher stat increases per level. Returns all of
     the increases so they can be displayed in the TakeTurnState on level up.
+
+    I will use a boolean / flag to tell the game whether to print the player Pokemon's stat increases. It will be
+    initially set to "false" to prevent the statsLevelUp() function from printing the Player Pokemon's stats right at
+    the beginning of the game, and to prevent the statsLevelUp() function from printing the enemy Pokemon's stats right
+    at the beginning of a random encounter.
 ]]
 function Pokemon:statsLevelUp()
 
-    -- First, we declare the variable that will store the HP increase. It sstarts as 0.
+    -- First, we declare the variable that will store the HP increase. It starts as 0.
     local HPIncrease = 0
 
     -- Then, we roll the dice 3 times to see if that number is less than or equal to the HP IV (capped at 5).
@@ -103,9 +108,13 @@ function Pokemon:statsLevelUp()
         end
     end
 
-    -- DEBUG: This will print each stat increases on the console.
+    -- DEBUG: This will print each stat increases on the console. I will only print it if the printStatIncrease flag
+    -- is true. This way, only the player Pokemon stat increases will be printed on the console, and only when they
+    -- level up.
     -- IT'S also printing the stats for the enemy pokemon during every new random encounter, WHICH IS NOT WHAT I WANT.
-    print("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease)
+    if printStatIncrease then
+        print("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease)
+    end
 
     return HPIncrease, attackIncrease, defenseIncrease, speedIncrease
 end

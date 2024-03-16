@@ -202,6 +202,14 @@ end
     Now, let me try printing “Hello World” ONLY after leveling up. I will make the player wait until the player hits
     "Enter" to go from the “Hello World” to the Overworld after leveling up.
 
+    What I could do  is to create a boolean, which will be activated each time that you level up, and which will be
+    deactivated after you go back to the overworld. This boolean will say something like “print Stat Increases”. That
+    way, the statsLevelUp() function would only be called only if the player levels up. That is, it wouldn't be printed
+    right at the beginning of the game, nor it would be printed for an enemy. Also, since I will deactivate it right
+    after returning to the overworld, I won’t print the stats for the enemy pokemon at the start of the next random
+    encounter. That is, I would only print the stat increases for the player pokemon, and ONLY right after they level
+    up.
+
 ]]
 function TakeTurnState:victory()
 
@@ -291,6 +299,11 @@ function TakeTurnState:victory()
                             -- set our exp to whatever the overlap is
                             self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
 
+                            -- Right before calling the levelUp() function, I will activate a Boolean to print the stat
+                            -- increases in the console. This is for DEBUGGING PURPOSES for the time being.
+                            printStatIncrease = true
+
+
                             -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles
                             -- how many points are allocated into each stat when you level up.
                             self.playerPokemon:levelUp()
@@ -309,6 +322,12 @@ function TakeTurnState:victory()
                                             -- WORKED.
                                             gStateStack:push(BattleMessageState('Hello World after leveling up',
                                             function()
+
+                                                -- This will deactivate the Boolean that prints the stat increases in
+                                                -- the console so that it doesn't print the enemy's stats on the next
+                                                -- random encounter.
+                                                printStatIncrease = false
+
                                                 -- This should fade the screen to white and return the player to the
                                                 -- overworld.
                                                 self:fadeOutWhite()
