@@ -220,7 +220,10 @@ end
            self:fadeOutWhite()
         end))
     First, I will try to print in the console the initial values of the stats of the player pokemon BEFORE leveling up
-    by using the “self.playerPokemonname_of_the_stat” notation.
+    by using the “self.playerPokemon.name_of_the_stat” notation.
+
+    Next, I will try to add the initial stat and the stat increase in the dialogue box, as well as showing the resulting
+    stat after leveling up.
 ]]
 function TakeTurnState:victory()
 
@@ -336,8 +339,9 @@ function TakeTurnState:victory()
                                             -- should wait for the user to hit "Enter" before going to the Overworld. IT
                                             -- WORKED.
                                             --gStateStack:push(BattleMessageState('Hello World after leveling up',
-                                            -- This will print each stat increase from Global Variables.
-                                            gStateStack:push(BattleMessageState("HP: " .. globalHPIncrease .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
+                                            -- This will print each stat increase from Global Variables, and I will
+                                            -- try to add all the stats and show the resulting stat after leveling up.
+                                            gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
 
                                             function()
 
