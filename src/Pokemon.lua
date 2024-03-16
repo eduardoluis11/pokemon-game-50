@@ -48,7 +48,11 @@ function Pokemon.getRandomDef()
     return POKEMON_DEFS[POKEMON_IDS[math.random(#POKEMON_IDS)]]
 end
 
---[[
+--[[ Level up function. This increases each of the stats of a Pokemon when you level up. THIS IS AN IMPORTANT PART
+    OF THE HOMEWORK ASSIGNMENT, since this is the back-end of what I want to print on the level-up screen. That is,
+    this is the back-end to what I want to show in the front-end.
+
+
     Takes the IV (individual value) for each stat into consideration and rolls
     the dice 3 times to see if that number is less than or equal to the IV (capped at 5).
     The dice is capped at 6 just so no stat ever increases by 3 each time, but
@@ -56,8 +60,12 @@ end
     the increases so they can be displayed in the TakeTurnState on level up.
 ]]
 function Pokemon:statsLevelUp()
+
+    -- First, we declare the variable that will store the HP increase. It sstarts as 0.
     local HPIncrease = 0
 
+    -- Then, we roll the dice 3 times to see if that number is less than or equal to the HP IV (capped at 5).
+    -- This will sometimes increase the HP by 1.
     for j = 1, 3 do
         if math.random(6) <= self.HPIV then
             self.HP = self.HP + 1
@@ -65,6 +73,7 @@ function Pokemon:statsLevelUp()
         end
     end
 
+    -- Same as the HP, but with the Attack Points: it starts as 0, but may increase by at least 1 point.
     local attackIncrease = 0
 
     for j = 1, 3 do
@@ -74,6 +83,7 @@ function Pokemon:statsLevelUp()
         end
     end
 
+    -- Defense Increase
     local defenseIncrease = 0
 
     for j = 1, 3 do
@@ -83,6 +93,7 @@ function Pokemon:statsLevelUp()
         end
     end
 
+    -- Speed Increase
     local speedIncrease = 0
 
     for j = 1, 3 do
@@ -91,6 +102,10 @@ function Pokemon:statsLevelUp()
             speedIncrease = speedIncrease + 1
         end
     end
+
+    -- DEBUG: This will print each stat increases on the console.
+    -- IT'S also printing the stats for the enemy pokemon during every new random encounter, WHICH IS NOT WHAT I WANT.
+    print("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease)
 
     return HPIncrease, attackIncrease, defenseIncrease, speedIncrease
 end
