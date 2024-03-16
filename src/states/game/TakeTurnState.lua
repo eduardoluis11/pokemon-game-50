@@ -241,10 +241,15 @@ function TakeTurnState:victory()
 
             function()
 
-                -- sum all IVs and multiply by level to get exp amount.
-                -- This is is the total EXP that you will get. THIS EXP WON'T BE GIVEN TO THE PLAYER YET!
-                local exp = (self.opponentPokemon.HPIV + self.opponentPokemon.attackIV +
-                        self.opponentPokemon.defenseIV + self.opponentPokemon.speedIV) * self.opponentPokemon.level
+                ---- sum all IVs and multiply by level to get exp amount.
+                ---- This is is the total EXP that you will get. THIS EXP WON'T BE GIVEN TO THE PLAYER YET!
+                ---- REACTIVATE LATER
+                --local exp = (self.opponentPokemon.HPIV + self.opponentPokemon.attackIV +
+                --        self.opponentPokemon.defenseIV + self.opponentPokemon.speedIV) * self.opponentPokemon.level
+
+                -- DEBUG: I will give a ton of EXP to the player after each battle to make the player level up quickly.
+                -- ELIMINATE LATER.
+                local exp = 300
 
                 gStateStack:push(BattleMessageState('You earned ' .. tostring(exp) .. ' experience points!',
                         function() end, false))
