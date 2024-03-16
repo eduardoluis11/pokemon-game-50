@@ -219,7 +219,8 @@ end
 
            self:fadeOutWhite()
         end))
-
+    First, I will try to print in the console the initial values of the stats of the player pokemon BEFORE leveling up
+    by using the “self.playerPokemonname_of_the_stat” notation.
 ]]
 function TakeTurnState:victory()
 
@@ -312,6 +313,10 @@ function TakeTurnState:victory()
                             -- Right before calling the levelUp() function, I will activate a Boolean to print the stat
                             -- increases in the console. This is for DEBUGGING PURPOSES for the time being.
                             printStatIncrease = true
+
+                            -- DEBUG: This will print the current stats for the Player Pokemon BEFORE leveling up.
+                            print("These are the stats for the Player Pokemon BEFORE leveling up:")
+                            print("HP: " .. self.playerPokemon.HP .. " Attack: " .. self.playerPokemon.attack .. " Defense: " .. self.playerPokemon.defense .. " Speed: " .. self.playerPokemon.speed)
 
 
                             -- This calls the levelUp() function from src/Pokemon.lua, which is the back-end that handles

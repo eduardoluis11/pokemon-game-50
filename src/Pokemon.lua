@@ -117,6 +117,7 @@ function Pokemon:statsLevelUp()
     -- level up.
     -- IT'S also printing the stats for the enemy pokemon during every new random encounter, WHICH IS NOT WHAT I WANT.
     if printStatIncrease then
+        print("Level Up! These are the stats increases for this level:")
         print("HP: " .. HPIncrease .. " Attack: " .. attackIncrease .. " Defense: " .. defenseIncrease .. " Speed: " .. speedIncrease)
 
         globalHPIncrease = HPIncrease
