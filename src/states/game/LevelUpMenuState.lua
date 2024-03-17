@@ -9,6 +9,14 @@
     REMEMBER THAT I HAD ALREADY CREATED NEW FILES FOR THE ZELDA homework! So, maybe I’ll have to create a new lua file
     for creating a new type of menu, just like Copilot suggested! I could simply copy and paste the BattleMenuState.lua,
     but, instead of “fight” and “run”, I would put ALL of the stat increases!
+
+    I can't change the values for "width" nor "height" if I use VIRTUAL_HEIGHT and VIRTUAL_WIDTH for the x and y
+    positions! I need to keep them as 64, 64, because, otherwise, the game will
+    get a blue screen error!
+
+    I was able to use another X and Y dimensions for the Level Up Menu other than 64! I needed to eliminate the VIRTUAL
+    WIDTH and VIRTUAL HEIGHT constants for the x and y positions. Otherwise, I wouldn’t be able to change the width and
+    height of the menu to anything other than 64.
 ]]
 
 LevelUpMenuState = Class{__includes = BaseState}
@@ -17,10 +25,18 @@ function LevelUpMenuState:init(battleState)
     self.battleState = battleState
     
     self.battleMenu = Menu {
-        x = VIRTUAL_WIDTH - 64,
-        y = VIRTUAL_HEIGHT - 64,
-        width = 64,
-        height = 64,
+        --x = VIRTUAL_WIDTH - 64,
+        --y = VIRTUAL_HEIGHT - 64,
+
+        -- DON'T ASSIGN VIRTUAL_WIDTH nor VIRTUAL_HEIGHT!
+        x = 10,
+        y = 10,
+
+        --width = 64,
+        --height = 64,
+        width = 200,
+        height = 200,
+
         items = {
             {
                 text = 'Hello World!',
