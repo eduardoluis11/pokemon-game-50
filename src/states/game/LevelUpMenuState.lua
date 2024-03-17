@@ -17,6 +17,10 @@
     I was able to use another X and Y dimensions for the Level Up Menu other than 64! I needed to eliminate the VIRTUAL
     WIDTH and VIRTUAL HEIGHT constants for the x and y positions. Otherwise, I wouldn’t be able to change the width and
     height of the menu to anything other than 64.
+
+    To make the Level Up Menu disappear after the player hits Enter, I copied and pasted the code from the
+    TakeTurnState:fadeOutWhite() function, and I added an extra pop() function to it. This way, the game will go back
+    to the overworld after the player hits Enter on the Level Up Menu, as if he had defeated an enemy.
 ]]
 
 LevelUpMenuState = Class{__includes = BaseState}
@@ -47,42 +51,80 @@ function LevelUpMenuState:init(battleState)
                 --    --self:fadeOutWhite()
                 --    gStateStack:pop()
                 --    --gStateStack:push(TakeTurnState(self.battleState))
+                --
+                --    ---- This should return the player to the overworld, and stop the Victory Music.
+                --    --gStateStack:push(TakeTurnState:fadeOutWhite())
                 --end
-                                onSelect = function()
-                    gSounds['run']:play()
 
-                    -- pop battle menu
-                    gStateStack:pop()
+                -- BUGGY: This stops the Victory Music and plays the overworld music, but you're still at the battle
+                -- Screen.
 
-                    -- show a message saying they successfully ran, then fade in
-                    -- and out back to the field automatically
-                    gStateStack:push(BattleMessageState('You fled successfully!',
-                        function() end), false)
-                    Timer.after(0.5, function()
-                        gStateStack:push(FadeInState({
+                -- This lets the player to go back to the Overworld after hitting Enter.
+                onSelect = function()
+                    -- fade in
+                    gStateStack:push(FadeInState({
+                        r = 1, g = 1, b = 1
+                    }, 1,
+                    function()
+
+                        -- resume field music
+                        -- This stops the Battle music
+                        gSounds['victory-music']:stop()
+
+                        -- This plays the Overworld music
+                        gSounds['field-music']:play()
+
+                        -- pop off the battle state
+                        -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                        gStateStack:pop()
+
+                        -- Extra pop() function that I added to make the player go back to the overworld.
+                        gStateStack:pop()
+
+                        -- This inserts a new State to the Stack by using the FadeOutState() function.
+                        gStateStack:push(FadeOutState({
                             r = 1, g = 1, b = 1
-                        }, 1,
+                        }, 1, function() end))
+                    end))
+                end -- End of the function that makes the player go back to the overworld after hitting Enter.
 
-                        -- pop message and battle state and add a fade to blend in the field
-                        function()
 
-                            -- resume field music
-                            gSounds['field-music']:play()
 
-                            -- pop message state
-                            gStateStack:pop()
-
-                            -- pop battle state
-                            gStateStack:pop()
-
-                            gStateStack:push(FadeOutState({
-                                r = 1, g = 1, b = 1
-                            }, 1, function()
-                                -- do nothing after fade out ends
-                            end))
-                        end))
-                    end)
-                end
+                --                onSelect = function()
+                --    gSounds['run']:play()
+                --
+                --    -- pop battle menu
+                --    gStateStack:pop()
+                --
+                --    -- show a message saying they successfully ran, then fade in
+                --    -- and out back to the field automatically
+                --    gStateStack:push(BattleMessageState('You fled successfully!',
+                --        function() end), false)
+                --    Timer.after(0.5, function()
+                --        gStateStack:push(FadeInState({
+                --            r = 1, g = 1, b = 1
+                --        }, 1,
+                --
+                --        -- pop message and battle state and add a fade to blend in the field
+                --        function()
+                --
+                --            -- resume field music
+                --            gSounds['field-music']:play()
+                --
+                --            -- pop message state
+                --            gStateStack:pop()
+                --
+                --            -- pop battle state
+                --            gStateStack:pop()
+                --
+                --            gStateStack:push(FadeOutState({
+                --                r = 1, g = 1, b = 1
+                --            }, 1, function()
+                --                -- do nothing after fade out ends
+                --            end))
+                --        end))
+                --    end)
+                --end
             },
             {
                 text = 'This is a Menu!',
