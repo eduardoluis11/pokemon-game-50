@@ -66,3 +66,17 @@ GitHub's Copilot Chat.
 I highlighted lines 41 to 73 from the TakeTurnState.lua file.
 I attached the TakeTurnState.lua, the Menu.lua, and the BattleMenuState.lua files.
 Accessed on March 16th, 2024.
+
+11) /explain Explain how the Menu{} class works, and tell me how the BattleMenuState{} class uses the Menu{} class . Here's the code for the Menu{} class: "Menu = Class{}  function Menu:init(def) self.panel = Panel(def.x, def.y, def.width, def.height)
+self.selection = Selection {
+    items = def.items,
+    x = def.x,
+    y = def.y,
+    width = def.width,
+    height = def.height
+}
+end ".
+GitHub's Copilot Chat.
+I highlighted lines 9 to 67 from the BattleMenuState.lua file.
+I attached the Menu.lua and the BattleMenuState.lua files.
+Accessed on March 17th, 2024.
