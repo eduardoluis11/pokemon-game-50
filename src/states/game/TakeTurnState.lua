@@ -71,11 +71,11 @@ function TakeTurnState:enter(params)
             -- DEBUG: This is a test menu that I will print. It will print "Hello World" and "This is a Menu".
             -- ELIMINATE LATER.
             -- IT WORKS, but it's being printed from the 2nd turn and onwards.
-            gStateStack:push(LevelUpMenuState(self.battleState))
+            --gStateStack:push(LevelUpMenuState(self.battleState))
 
             -- This prints the menu with the options "Fight" and "Run" during combat from the 2nd turn and onwards.
             -- REACTIVATE LATER.
-            --gStateStack:push(BattleMenuState(self.battleState))
+            gStateStack:push(BattleMenuState(self.battleState))
         end)
     end)
 end
@@ -390,9 +390,13 @@ function TakeTurnState:victory()
                                             --gStateStack:push(BattleMessageState("HP: " .. self.playerPokemon.HP .. ' + ' .. globalHPIncrease .. ' = ' .. (self.playerPokemon.HP + globalHPIncrease) .. " Attack: " .. globalAttackIncrease .. " Defense: " .. globalDefenseIncrease .. " Speed: " .. globalSpeedIncrease,
                                             -- This was supposed to render the menu, BUT DIDNT WORK.
                                             --gStateStack:push(BattleMessageState(statsMenu,
-                                            gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. ", Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. ", Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. ", Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
+                                            --gStateStack:push(BattleMessageState("HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP .. ", Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack .. ", Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense .. ", Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
 
-
+                                            -- This prints my Custom Menu.
+                                            -- BUGGY: If I press Enter during this menu, my Pokemon will attack again,
+                                            -- and I will earn experience one more time. I will never go back to the
+                                            -- overworld!
+                                            gStateStack:push(LevelUpMenuState(self.battleState,
                                             function()
 
                                                 -- This will deactivate the Boolean that prints the stat increases in

@@ -40,9 +40,13 @@ function LevelUpMenuState:init(battleState)
         items = {
             {
                 text = 'Hello World!',
+
+                -- If the user Presses Enter while the cursor is on this option, the player should go back to the
+                -- overworld
                 onSelect = function()
+                    --self:fadeOutWhite()
                     gStateStack:pop()
-                    gStateStack:push(TakeTurnState(self.battleState))
+                    --gStateStack:push(TakeTurnState(self.battleState))
                 end
             },
             {
