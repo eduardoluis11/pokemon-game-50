@@ -469,3 +469,193 @@ In summary, the `Menu` class is a reusable GUI component for displaying a list o
 
 ======================================================================================================================
 
+Edit the following menu so that, no matter which item is selected, the function that will be executed when "onSelect" is the one in the highlighted snippet: "local statsMenu = Menu { x = 10, y = 10, width = 200, height = 200, items = { { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end }, { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end }, { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end }, { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end } } }".
+
+You can modify the `statsMenu` definition to use the provided `onSelect` function for all items. Here's how you can do it:
+
+```lua
+local statsMenu = Menu {
+    x = 10,
+    y = 10,
+    width = 200,
+    height = 200,
+    items = {
+        {
+            text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP,
+            onSelect = function()
+                -- fade in
+                gStateStack:push(FadeInState({
+                    r = 1, g = 1, b = 1
+                }, 1,
+                function()
+
+                    -- resume field music
+                    -- This stops the Battle music
+                    gSounds['victory-music']:stop()
+
+                    -- This plays the Overworld music
+                    gSounds['field-music']:play()
+
+                    -- pop off the battle state
+                    -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                    gStateStack:pop()
+
+                    -- Extra pop() function that I added to make the player go back to the overworld.
+                    gStateStack:pop()
+
+                    -- This inserts a new State to the Stack by using the FadeOutState() function.
+                    gStateStack:push(FadeOutState({
+                        r = 1, g = 1, b = 1
+                    }, 1, function() end))
+                end))
+            end
+        },
+        {
+            text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack,
+            onSelect = function()
+                -- fade in
+                gStateStack:push(FadeInState({
+                    r = 1, g = 1, b = 1
+                }, 1,
+                function()
+
+                    -- resume field music
+                    -- This stops the Battle music
+                    gSounds['victory-music']:stop()
+
+                    -- This plays the Overworld music
+                    gSounds['field-music']:play()
+
+                    -- pop off the battle state
+                    -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                    gStateStack:pop()
+
+                    -- Extra pop() function that I added to make the player go back to the overworld.
+                    gStateStack:pop()
+
+                    -- This inserts a new State to the Stack by using the FadeOutState() function.
+                    gStateStack:push(FadeOutState({
+                        r = 1, g = 1, b = 1
+                    }, 1, function() end))
+                end))
+            end
+        },
+        {
+            text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense,
+            onSelect = function()
+                -- fade in
+                gStateStack:push(FadeInState({
+                    r = 1, g = 1, b = 1
+                }, 1,
+                function()
+
+                    -- resume field music
+                    -- This stops the Battle music
+                    gSounds['victory-music']:stop()
+
+                    -- This plays the Overworld music
+                    gSounds['field-music']:play()
+
+                    -- pop off the battle state
+                    -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                    gStateStack:pop()
+
+                    -- Extra pop() function that I added to make the player go back to the overworld.
+                    gStateStack:pop()
+
+                    -- This inserts a new State to the Stack by using the FadeOutState() function.
+                    gStateStack:push(FadeOutState({
+                        r = 1, g = 1, b = 1
+                    }, 1, function() end))
+                end))
+            end
+        },
+        {
+            text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed,
+            onSelect = function()
+                -- fade in
+                gStateStack:push(FadeInState({
+                    r = 1, g = 1, b = 1
+                }, 1,
+                function()
+
+                    -- resume field music
+                    -- This stops the Battle music
+                    gSounds['victory-music']:stop()
+
+                    -- This plays the Overworld music
+                    gSounds['field-music']:play()
+
+                    -- pop off the battle state
+                    -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                    gStateStack:pop()
+
+                    -- Extra pop() function that I added to make the player go back to the overworld.
+                    gStateStack:pop()
+
+                    -- This inserts a new State to the Stack by using the FadeOutState() function.
+                    gStateStack:push(FadeOutState({
+                        r = 1, g = 1, b = 1
+                    }, 1, function() end))
+                end))
+            end
+        }
+    }
+}
+```
+This code will execute the same function, no matter which item is selected from the menu.
+
+======================================================================================================================
+
+What you said works but, isn't there a more efficient way of executing the same function for any of the items selected? I mean, you're repeating the same chunk of code for the function for each item.
+
+Yes, you're correct. Repeating the same function for each item is not efficient. A better approach would be to define the function once and then assign it to each item's `onSelect` property. Here's how you can do it:
+
+```lua
+-- Define the function
+local onSelectFunction = function()
+    -- fade in
+    gStateStack:push(FadeInState({
+        r = 1, g = 1, b = 1
+    }, 1,
+    function()
+
+        -- resume field music
+        -- This stops the Battle music
+        gSounds['victory-music']:stop()
+
+        -- This plays the Overworld music
+        gSounds['field-music']:play()
+
+        -- pop off the battle state
+        -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+        gStateStack:pop()
+
+        -- Extra pop() function that I added to make the player go back to the overworld.
+        gStateStack:pop()
+
+        -- This inserts a new State to the Stack by using the FadeOutState() function.
+        gStateStack:push(FadeOutState({
+            r = 1, g = 1, b = 1
+        }, 1, function() end))
+    end))
+end
+
+-- Use the function for each item
+local statsMenu = Menu {
+    x = 10,
+    y = 10,
+    width = 200,
+    height = 200,
+    items = {
+        { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = onSelectFunction },
+        { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = onSelectFunction },
+        { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = onSelectFunction },
+        { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = onSelectFunction }
+    }
+}
+```
+
+In this code, the `onSelectFunction` is defined once and then used for each item in the `statsMenu`. This way, you avoid repeating the same chunk of code for each item.
+
+======================================================================================================================

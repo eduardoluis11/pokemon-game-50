@@ -365,6 +365,37 @@ function TakeTurnState:victory()
 
                                     function()
 
+                                            -- Function that will send the player back to the overworld after hitting
+                                            -- "Enter". I'm declaring it here. I will call it whenever the player hits
+                                            -- "Enter" on the Level Up Menu.
+                                            local onSelectFunction = function()
+                                                -- fade in
+                                                gStateStack:push(FadeInState({
+                                                    r = 1, g = 1, b = 1
+                                                }, 1,
+                                                function()
+
+                                                    -- resume field music
+                                                    -- This stops the Battle music
+                                                    gSounds['victory-music']:stop()
+
+                                                    -- This plays the Overworld music
+                                                    gSounds['field-music']:play()
+
+                                                    -- pop off the battle state
+                                                    -- This eliminates the Battle Screen from the Stack when the fadeOutWhite() function was called.
+                                                    gStateStack:pop()
+
+                                                    -- Extra pop() function that I added to make the player go back to the overworld.
+                                                    gStateStack:pop()
+
+                                                    -- This inserts a new State to the Stack by using the FadeOutState() function.
+                                                    gStateStack:push(FadeOutState({
+                                                        r = 1, g = 1, b = 1
+                                                    }, 1, function() end))
+                                                end))
+                                            end
+
                                             -- DEBUG: This should print "Hello World" after printing "Level Up". It
                                             -- should wait for the user to hit "Enter" before going to the Overworld. IT
                                             -- WORKED.
@@ -372,16 +403,19 @@ function TakeTurnState:victory()
 
                                             -- Menu that will show the Stat Increases. This won't be printed yet. I'm
                                             -- just declaring the menu and its text here (source: Copilot).
+                                            -- After the user hits Enter on any of the selected options, the player
+                                            -- should go back to the overworld.
+                                            -- Now, I need to hide the hand cursor.
                                             local statsMenu = Menu {
                                                 x = 10,
                                                 y = 10,
                                                 width = 200,
                                                 height = 200,
                                                 items = {
-                                                    { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end },
-                                                    { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end },
-                                                    { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end },
-                                                    { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end }
+                                                    { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = onSelectFunction },
+                                                    { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = onSelectFunction },
+                                                    { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = onSelectFunction },
+                                                    { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = onSelectFunction }
                                                 }
                                             }
 
