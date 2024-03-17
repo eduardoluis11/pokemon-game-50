@@ -67,7 +67,15 @@ function TakeTurnState:enter(params)
 
             -- remove the last attack state from the stack
             gStateStack:pop()
-            gStateStack:push(BattleMenuState(self.battleState))
+
+            -- DEBUG: This is a test menu that I will print. It will print "Hello World" and "This is a Menu".
+            -- ELIMINATE LATER.
+            -- IT WORKS, but it's being printed from the 2nd turn and onwards.
+            gStateStack:push(LevelUpMenuState(self.battleState))
+
+            -- This prints the menu with the options "Fight" and "Run" during combat from the 2nd turn and onwards.
+            -- REACTIVATE LATER.
+            --gStateStack:push(BattleMenuState(self.battleState))
         end)
     end)
 end

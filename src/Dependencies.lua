@@ -2,6 +2,12 @@
 -- libraries
 --
 
+--[[ Any new file that I add to the game needs to be added here.
+
+    So, since I'm adding a new file to create a new Menu for displaying the Stat Increases, I will have to add that new
+    file in here.
+]]
+
 Class = require 'lib/class'
 Event = require 'lib/knife.event'
 push = require 'lib/push'
@@ -39,6 +45,7 @@ require 'src/states/entity/PlayerWalkState'
 
 require 'src/states/game/BattleState'
 require 'src/states/game/BattleMenuState'
+require 'src/states/game/LevelUpMenuState'  -- This is the new Menu that I'm adding to the game.
 require 'src/states/game/BattleMessageState'
 require 'src/states/game/DialogueState'
 require 'src/states/game/FadeInState'

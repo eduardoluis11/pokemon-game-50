@@ -5,6 +5,10 @@
 
     This file will create the Menu with all the Stat Increases when you Level Up, in a really similar way in which
     the BattleMenuState{} class renders the "fight" and "run" options.
+
+    REMEMBER THAT I HAD ALREADY CREATED NEW FILES FOR THE ZELDA homework! So, maybe I’ll have to create a new lua file
+    for creating a new type of menu, just like Copilot suggested! I could simply copy and paste the BattleMenuState.lua,
+    but, instead of “fight” and “run”, I would put ALL of the stat increases!
 ]]
 
 LevelUpMenuState = Class{__includes = BaseState}
