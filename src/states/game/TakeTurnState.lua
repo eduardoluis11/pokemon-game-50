@@ -371,7 +371,7 @@ function TakeTurnState:victory()
                                             --gStateStack:push(BattleMessageState('Hello World after leveling up',
 
                                             -- Menu that will show the Stat Increases. This won't be printed yet. I'm
-                                            -- just declaring the menu and its text here.
+                                            -- just declaring the menu and its text here (source: Copilot).
                                             local statsMenu = Menu {
                                                 x = 10,
                                                 y = 10,
@@ -396,7 +396,12 @@ function TakeTurnState:victory()
                                             -- BUGGY: If I press Enter during this menu, my Pokemon will attack again,
                                             -- and I will earn experience one more time. I will never go back to the
                                             -- overworld!
-                                            gStateStack:push(LevelUpMenuState(self.battleState,
+                                            --gStateStack:push(LevelUpMenuState(self.battleState,
+
+                                            -- This inserts the previously declared menu, and inserts it into a new
+                                            -- instance of the LevelUpMenuState{} class. This way, I'll create the Menu
+                                            -- that will print all the stat increases.
+                                            gStateStack:push(LevelUpMenuState(statsMenu,
                                             function()
 
                                                 -- This will deactivate the Boolean that prints the stat increases in
