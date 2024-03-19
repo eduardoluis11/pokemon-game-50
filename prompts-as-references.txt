@@ -91,3 +91,13 @@ Accessed on March 17th, 2024.
 GitHub's Copilot Chat.
 I attached the LevelUpMenuState.lua file.
 Accessed on March 17th, 2024.
+
+14) "Tell me what this entire file does."
+GitHub's Copilot Chat.
+I attached the Selection.lua file.
+Accessed on March 19th, 2024.
+
+15) "Hold on, did you say that the render() function renders the cursor right next to the item? Tell me the exact snippet in the highlighted code that renders the hand icon for the cursor."
+GitHub's Copilot Chat.
+I highlighted lines 90 to 107 from the Selection.lua file.
+Accessed on March 19th, 2024.

@@ -659,3 +659,32 @@ local statsMenu = Menu {
 In this code, the `onSelectFunction` is defined once and then used for each item in the `statsMenu`. This way, you avoid repeating the same chunk of code for each item.
 
 ======================================================================================================================
+
+Tell me what this entire file does.
+
+The `Selection.lua` file defines a `Selection` class that is used to create a menu with selectable items. This class is used in the game to create various menus where the player can select an option.
+
+Here's a breakdown of what each part of the class does:
+
+- `Selection:init(def)`: This is the constructor of the `Selection` class. It initializes a new instance of the class with the provided definition. The definition includes the items of the menu, the position (x and y coordinates), the dimensions (height and width), and the font to be used.
+
+- `Selection:update(dt)`: This function updates the state of the menu based on user input. It checks if the 'up' or 'down' keys were pressed to change the current selection, or if the 'return' or 'enter' keys were pressed to select the current item. When a key is pressed, it plays a 'blip' sound.
+
+- `Selection:render()`: This function renders the menu on the screen. It iterates over the items of the menu and draws each one at the correct position. If an item is currently selected, it also draws a cursor next to it.
+
+The `Selection` class is used in the game to create menus where the player can select an option, such as the battle menu. The selectable options are defined as items in the `items` table, and each item has a `text` property for the display text and an `onSelect` property for the function to be executed when the item is selected.
+
+======================================================================================================================
+
+Hold on, did you say that the render() function renders the cursor right next to the item? Tell me the exact snippet in the highlighted code that renders the hand icon for the cursor.
+
+
+The exact snippet in the highlighted code that renders the hand icon for the cursor is:
+
+```lua
+if i == self.currentSelection then
+    love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
+end
+```
+
+This code checks if the current item is the one selected (`i == self.currentSelection`). If it is, it uses the `love.graphics.draw` function to draw the cursor icon (`gTextures['cursor']`) at a specific position (`self.x - 8, paddedY`). The position is calculated to be 8 pixels to the left of the item's x-coordinate (`self.x - 8`) and at the same y-coordinate as the item (`paddedY`).

@@ -359,6 +359,8 @@ function TakeTurnState:victory()
                             -- Probably this is where I'll need to type a snippet that gets the stats from the levelUp()
                             -- function, and then displays them in a message in the front-end in the Battle Results screen.
 
+                            -- This will prevent the hand icon cursor from being rendered on the Level Up Menu
+                            renderCursor = false
 
                             -- This prints the message "Level Up!", and then, automatically, sends you to the overworld.
                             gStateStack:push(BattleMessageState('Congratulations! Level Up!',
@@ -442,6 +444,10 @@ function TakeTurnState:victory()
                                                 -- the console so that it doesn't print the enemy's stats on the next
                                                 -- random encounter.
                                                 printStatIncrease = false
+
+                                                -- This will render the hand cursor for the Menus again for the next
+                                                -- battle. THIS DOESN'T WORK.
+                                                renderCursor = true
 
                                                 -- This should fade the screen to white and return the player to the
                                                 -- overworld.

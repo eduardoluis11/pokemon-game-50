@@ -34,6 +34,8 @@ PlayState = Class{__includes = BaseState}
 	enemy, the levelUp() function is called like 4 times. That’s why the statLevelUp() function is being called right
 	at the beginning of the game, and at the beginning of a random encounter.
 
+    I will also declare the boolean that will determine whether to render the hand cursor for the Menus. It will be
+    "true" by default.
 ]]
 function PlayState:init()
     self.level = Level()
@@ -45,6 +47,9 @@ function PlayState:init()
 
     -- This boolean will tell whether to print the Pokemon's stats or not. It will be initially set to "false".
     printStatIncrease = false
+
+    -- This boolean will determine whether to render the hand cursor for the Menus. It wil be "true" by default.
+    renderCursor = true
 
 end
 
