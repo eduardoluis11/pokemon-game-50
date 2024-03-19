@@ -391,6 +391,10 @@ function TakeTurnState:victory()
                                                     -- Extra pop() function that I added to make the player go back to the overworld.
                                                     gStateStack:pop()
 
+                                                    -- This will once again render the hand cursor for the "Fight" Menu
+                                                    -- for the next battle.
+                                                    renderCursor = true
+
                                                     -- This inserts a new State to the Stack by using the FadeOutState() function.
                                                     gStateStack:push(FadeOutState({
                                                         r = 1, g = 1, b = 1
@@ -445,9 +449,9 @@ function TakeTurnState:victory()
                                                 -- random encounter.
                                                 printStatIncrease = false
 
-                                                -- This will render the hand cursor for the Menus again for the next
-                                                -- battle. THIS DOESN'T WORK.
-                                                renderCursor = true
+                                                ---- This will render the hand cursor for the Menus again for the next
+                                                ---- battle. THIS DOESN'T WORK.
+                                                --renderCursor = true
 
                                                 -- This should fade the screen to white and return the player to the
                                                 -- overworld.
