@@ -51,6 +51,10 @@ end
     keys. So, I will need to edit this function to play the sound only if the cursor is being rendered. Otherwise,
     in the Level Up Menu, the sound will be played if the player presses the Up or Down arrow keys.
 
+    I edited the code so that no sound will be played if you press the up or down arw keys, nor when you hit Enter
+    when you select a menu option, if the cursor isn't being rendered. This way, no sound will be played during the
+    Level Up Menu.
+
 
 ]]
 function Selection:update(dt)
@@ -78,9 +82,13 @@ function Selection:update(dt)
         gSounds['blip']:play()
     elseif love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
         self.items[self.currentSelection].onSelect()
-        
-        gSounds['blip']:stop()
-        gSounds['blip']:play()
+
+        -- This will play a sound if you hit Enter while selecting an Option AND if the hand cursor is being rendered
+        if renderCursor then
+            gSounds['blip']:stop()
+            gSounds['blip']:play()
+
+        end
     end
 end
 
