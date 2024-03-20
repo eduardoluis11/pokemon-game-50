@@ -67,7 +67,7 @@ I highlighted lines 41 to 73 from the TakeTurnState.lua file.
 I attached the TakeTurnState.lua, the Menu.lua, and the BattleMenuState.lua files.
 Accessed on March 16th, 2024.
 
-11) /explain Explain how the Menu{} class works, and tell me how the BattleMenuState{} class uses the Menu{} class . Here's the code for the Menu{} class: "Menu = Class{}  function Menu:init(def) self.panel = Panel(def.x, def.y, def.width, def.height)
+12) /explain Explain how the Menu{} class works, and tell me how the BattleMenuState{} class uses the Menu{} class . Here's the code for the Menu{} class: "Menu = Class{}  function Menu:init(def) self.panel = Panel(def.x, def.y, def.width, def.height)
 self.selection = Selection {
     items = def.items,
     x = def.x,
@@ -81,23 +81,23 @@ I highlighted lines 9 to 67 from the BattleMenuState.lua file.
 I attached the Menu.lua and the BattleMenuState.lua files.
 Accessed on March 17th, 2024.
 
-12) "Edit the following menu so that, no matter which item is selected, the function that will be executed when "onSelect" is the one in the highlighted snippet: "local statsMenu = Menu { x = 10, y = 10, width = 200, height = 200, items = { { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end }, { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end }, { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end }, { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end } } }"."
+13) "Edit the following menu so that, no matter which item is selected, the function that will be executed when "onSelect" is the one in the highlighted snippet: "local statsMenu = Menu { x = 10, y = 10, width = 200, height = 200, items = { { text = "HP: " .. initialHP .. ' + ' .. globalHPIncrease .. ' = ' .. self.playerPokemon.HP, onSelect = function() end }, { text = "Attack: " .. initialAttack .. ' + ' .. globalAttackIncrease .. ' = ' .. self.playerPokemon.attack, onSelect = function() end }, { text = "Defense: " .. initialDefense .. ' + ' .. globalDefenseIncrease .. ' = ' .. self.playerPokemon.defense, onSelect = function() end }, { text = "Speed: " .. initialSpeed .. ' + ' .. globalSpeedIncrease .. ' = ' .. self.playerPokemon.speed, onSelect = function() end } } }"."
 GitHub's Copilot Chat.
 I highlighted lines 78 to 105 from the LevelUpMenuState.lua file.
 I attached the LevelUpMenuState.lua file.
 Accessed on March 17th, 2024.
 
-13) "What you said works but, isn't there a more efficient way of executing the same function for any of the items selected? I mean, you're repeating the same chunk of code for the function for each item."
+14) "What you said works but, isn't there a more efficient way of executing the same function for any of the items selected? I mean, you're repeating the same chunk of code for the function for each item."
 GitHub's Copilot Chat.
 I attached the LevelUpMenuState.lua file.
 Accessed on March 17th, 2024.
 
-14) "Tell me what this entire file does."
+15) "Tell me what this entire file does."
 GitHub's Copilot Chat.
 I attached the Selection.lua file.
 Accessed on March 19th, 2024.
 
-15) "Hold on, did you say that the render() function renders the cursor right next to the item? Tell me the exact snippet in the highlighted code that renders the hand icon for the cursor."
+16) "Hold on, did you say that the render() function renders the cursor right next to the item? Tell me the exact snippet in the highlighted code that renders the hand icon for the cursor."
 GitHub's Copilot Chat.
 I highlighted lines 90 to 107 from the Selection.lua file.
 Accessed on March 19th, 2024.
