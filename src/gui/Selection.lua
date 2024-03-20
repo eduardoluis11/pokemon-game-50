@@ -51,10 +51,12 @@ end
     keys. So, I will need to edit this function to play the sound only if the cursor is being rendered. Otherwise,
     in the Level Up Menu, the sound will be played if the player presses the Up or Down arrow keys.
 
-    EDIT LATER.
+
 ]]
 function Selection:update(dt)
-    if love.keyboard.wasPressed('up') then
+
+    -- If the player presses Up AND the cursor is being rendered, the cursor will play a sound
+    if love.keyboard.wasPressed('up') and renderCursor then
         if self.currentSelection == 1 then
             self.currentSelection = #self.items
         else
@@ -63,7 +65,9 @@ function Selection:update(dt)
         
         gSounds['blip']:stop()
         gSounds['blip']:play()
-    elseif love.keyboard.wasPressed('down') then
+
+    -- If the player presses Down AND the cursor is being rendered, the cursor will play a sound
+    elseif love.keyboard.wasPressed('down') and renderCursor then
         if self.currentSelection == #self.items then
             self.currentSelection = 1
         else
