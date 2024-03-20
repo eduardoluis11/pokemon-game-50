@@ -279,11 +279,11 @@ function TakeTurnState:victory()
         -- when finished, push a victory message
         gStateStack:push(BattleMessageState('Victory!',
 
-        -- DEBUG: This function should print "Hello World!" before printing "You've earned EXP". It should wait for the
-        -- user to hit "Enter" before going to the "You've earned EXP" message. IT WORKED.
-        function()
-
-            gStateStack:push(BattleMessageState('Hello World!',
+        ---- DEBUG: This function should print "Hello World!" before printing "You've earned EXP". It should wait for the
+        ---- user to hit "Enter" before going to the "You've earned EXP" message. IT WORKED.
+        --function()
+        --
+        --    gStateStack:push(BattleMessageState('Hello World!',
 
             function()
 
@@ -468,15 +468,17 @@ function TakeTurnState:victory()
                             -- This should fade the screen to white and return the player to the overworld.
                         else
 
+                            self:fadeOutWhite()
 
-                            -- This prints “Hello World” ONLY after gaining EXP. Then, you need to press “Enter” during
-                            -- this new “Hello World” screen to go back to the Overworld. IT WORKED
-                            gStateStack:push(BattleMessageState('Hello World 2!',
 
-                            function()
-                                self:fadeOutWhite()
-
-                            end))   -- End of the "Hello World" message that shows up after the "EXP" message.
+                            ---- This prints “Hello World” ONLY after gaining EXP. Then, you need to press “Enter” during
+                            ---- this new “Hello World” screen to go back to the Overworld. IT WORKED
+                            --gStateStack:push(BattleMessageState('Hello World 2!',
+                            --
+                            --function()
+                            --    self:fadeOutWhite()
+                            --
+                            --end))   -- End of the "Hello World" message that shows up after the "EXP" message.
 
 
                         end -- End of the snippet where I'll have to put most of the work.
@@ -485,7 +487,7 @@ function TakeTurnState:victory()
                 end)    -- End of the Tweening EXP animation
 
             end)) -- DEBUG: End of the "Hello World" message
-        end))
+        --end))
     end)
 end
 
