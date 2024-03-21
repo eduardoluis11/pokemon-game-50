@@ -1,7 +1,11 @@
 # pokemon-game-50
-This is my submission for my "Pokemon" homework assignment from Harvard's CS50's Introduction to Game Development course.
+This is my submission for my "Pokemon" homework assignment from Harvard's CS50's Introduction to Game Development course. This submission was done by Eduardo Salinas.
 
 ## Notes
+
+### Bing AI's Chat disclaimer
+
+I, Eduardo Salinas, generated the references for this homework assignment in APA format in the "References" section of this README file using Bing AI's chat from bing.com. Upon generating draft language, I reviewed, edited, and revised the language to my own liking, and I take ultimate responsibility for the content of this text. I did not use an app to generate this citation other than Bing's AI web app. I copied the text from Bing's chat, pasted it on a text editor, and then edited it.
 
 ### Bug: can't run away from battle
 Sometimes, when the player tries to run away from a battle, the game will crash. This bug was already present in the game's original source code from the course's repo, and I couldn't fix it.
